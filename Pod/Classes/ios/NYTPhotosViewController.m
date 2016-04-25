@@ -341,6 +341,21 @@ static const UIEdgeInsets NYTPhotosViewControllerCloseButtonImageInsets = {3, 0,
     [self.notificationCenter postNotificationName:NYTPhotoViewControllerPhotoImageUpdatedNotification object:photo];
 }
 
+- (void)deletePhoto:(id<NYTPhoto>)photo {
+    if ([self.dataSource containsPhoto:photo]) {
+        NSUInteger index = [self.dataSource indexOfPhoto:photo];
+        NSUInteger count = [self.dataSource numberOfPhotos];
+        if (count < 2) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }else {
+            NSUInteger newPhotoIndex = index > 0 ? index - 1 : index + 1;
+            [self displayPhoto:[self.dataSource photoAtIndex:newPhotoIndex] animated:YES];
+            [self.dataSource removePhotoAtIndex:index];
+        }
+        [self updateOverlayInformation];
+    }
+}
+
 #pragma mark - Gesture Recognizers
 
 - (void)didSingleTapWithGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer {

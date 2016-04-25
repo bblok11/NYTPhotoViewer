@@ -57,4 +57,6 @@
  */
 - (id <NYTPhoto>)objectAtIndexedSubscript:(NSUInteger)photoIndex;
 
+- (void)removePhotoAtIndex:(NSUInteger)photoIndex;
+
 @end
